@@ -5,6 +5,9 @@
 *.dylib
 bin/*
 
+*.txt
+*.env
+
 # Test binary, build with `go test -c`
 *.test
 
