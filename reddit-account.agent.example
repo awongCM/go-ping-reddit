@@ -1,0 +1,5 @@
+user_agent: "linux:go-ping-reddit:0.1.0 (by /u/<reddit username>)"
+client_id: "<client id from reddit.com/prefs/apps>"
+client_secret: "<client secret>"
+username: "<reddit username>"
+password: "<reddit password>"
