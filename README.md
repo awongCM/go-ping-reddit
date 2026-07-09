@@ -10,6 +10,15 @@ A minimal Reddit + Go proof of concept. Connects to Reddit with a script app, fe
 
 When creating the app, choose **script** as the type and use `http://localhost:8080` as the redirect URI (required by Reddit even for script apps).
 
+## Quick demo (no credentials)
+
+Try the agent without Reddit API access:
+
+```bash
+go run . -demo
+go run . -demo -sub programming -limit 3
+```
+
 ## Setup
 
 1. Copy the credentials template:
@@ -48,6 +57,7 @@ go run . -agent /path/to/reddit-account.agent
 | `-sub` | `golang` | Subreddit name (without `/r/`) |
 | `-limit` | `5` | Number of posts to print |
 | `-agent` | `reddit-account.agent` | Path to credentials file |
+| `-demo` | `false` | Print sample posts without calling Reddit |
 
 ## Build
 
