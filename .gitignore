@@ -5,7 +5,6 @@ go-ping-reddit
 *.so
 *.dylib
 bin/
-go-ping-reddit
 
 # Local credentials (copy from reddit-account.agent.example)
 reddit-account.agent

@@ -32,7 +32,13 @@ go run . -demo -sub programming -limit 3
 
 ## Live mode (credentials required)
 
-1. Edit `reddit-account.agent` with your Reddit app credentials and account details.
+1. Copy the credentials template if you have not run `make setup`:
+
+   ```bash
+   cp reddit-account.agent.example reddit-account.agent
+   ```
+
+2. Edit `reddit-account.agent` with your Reddit app credentials and account details.
 
    The `user_agent` must follow Reddit's format:
 
@@ -42,7 +48,7 @@ go run . -demo -sub programming -limit 3
 
    If your account uses 2FA, append the TOTP code to your password with a colon: `password:123456`.
 
-2. Run against the live API:
+3. Run against the live API:
 
    ```bash
    make run
@@ -61,10 +67,10 @@ go run . -agent /path/to/reddit-account.agent
 
 | Flag | Default | Description |
 |------|---------|-------------|
-| `-demo` | `false` | Use sample data instead of the Reddit API |
 | `-sub` | `golang` | Subreddit name (without `/r/`) |
 | `-limit` | `5` | Number of posts to print |
 | `-agent` | `reddit-account.agent` | Path to credentials file |
+| `-demo` | `false` | Print sample posts without calling Reddit |
 
 ## Build
 
