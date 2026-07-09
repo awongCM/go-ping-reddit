@@ -10,15 +10,29 @@ A minimal Reddit + Go proof of concept. Connects to Reddit with a script app, fe
 
 When creating the app, choose **script** as the type and use `http://localhost:8080` as the redirect URI (required by Reddit even for script apps).
 
-## Setup
+## Development setup
 
-1. Copy the credentials template:
+```bash
+make setup   # download deps, build binary, create reddit-account.agent template
+make demo    # offline demo — no Reddit credentials required
+```
 
-   ```bash
-   cp reddit-account.agent.example reddit-account.agent
-   ```
+`make setup` creates `bin/go-ping-reddit` and copies `reddit-account.agent.example` to `reddit-account.agent` if it does not exist yet.
 
-2. Edit `reddit-account.agent` with your Reddit app credentials and account details.
+## Demo (no credentials)
+
+Run the offline demo to see sample output without calling the Reddit API:
+
+```bash
+make demo
+# or
+go run . -demo
+go run . -demo -sub programming -limit 3
+```
+
+## Live mode (credentials required)
+
+1. Edit `reddit-account.agent` with your Reddit app credentials and account details.
 
    The `user_agent` must follow Reddit's format:
 
@@ -28,9 +42,11 @@ When creating the app, choose **script** as the type and use `http://localhost:8
 
    If your account uses 2FA, append the TOTP code to your password with a colon: `password:123456`.
 
-3. Run the PoC:
+2. Run against the live API:
 
    ```bash
+   make run
+   # or
    go run .
    ```
 
@@ -45,6 +61,7 @@ go run . -agent /path/to/reddit-account.agent
 
 | Flag | Default | Description |
 |------|---------|-------------|
+| `-demo` | `false` | Use sample data instead of the Reddit API |
 | `-sub` | `golang` | Subreddit name (without `/r/`) |
 | `-limit` | `5` | Number of posts to print |
 | `-agent` | `reddit-account.agent` | Path to credentials file |

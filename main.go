@@ -9,10 +9,16 @@ import (
 )
 
 func main() {
+	demo := flag.Bool("demo", false, "run with sample data (no Reddit credentials required)")
 	agentFile := flag.String("agent", "reddit-account.agent", "path to Reddit credentials file")
 	subreddit := flag.String("sub", "golang", "subreddit to read (without /r/)")
 	limit := flag.Int("limit", 5, "number of posts to print")
 	flag.Parse()
+
+	if *demo {
+		runDemo(*subreddit, *limit)
+		return
+	}
 
 	bot, err := reddit.NewBotFromAgentFile(*agentFile, 0)
 	if err != nil {
