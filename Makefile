@@ -1,4 +1,4 @@
-.PHONY: setup demo run build vet clean
+.PHONY: setup demo run build vet test clean
 
 BINARY := bin/go-ping-reddit
 
@@ -7,7 +7,7 @@ setup:
 
 build: $(BINARY)
 
-$(BINARY): main.go demo.go go.mod go.sum
+$(BINARY): main.go demo.go validate.go go.mod go.sum
 	mkdir -p bin
 	go build -o $(BINARY) .
 
@@ -19,6 +19,9 @@ run:
 
 vet:
 	go vet ./...
+
+test:
+	go test ./...
 
 clean:
 	rm -rf bin/

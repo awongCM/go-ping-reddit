@@ -77,6 +77,7 @@ go run . -agent /path/to/reddit-account.agent
 ```bash
 go build -o go-ping-reddit .
 ./go-ping-reddit -sub golang
+make test
 ```
 
 ## How it works

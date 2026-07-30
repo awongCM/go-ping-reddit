@@ -25,19 +25,27 @@ var demoPosts = map[string][]demoPost{
 	},
 }
 
-func runDemo(subreddit string, limit int) {
+func runDemo(subreddit string, limit int) error {
+	if err := validateLimit(limit); err != nil {
+		return err
+	}
+	if err := validateSubreddit(subreddit); err != nil {
+		return err
+	}
+
+	sourceSubreddit := subreddit
 	posts, ok := demoPosts[subreddit]
 	if !ok {
+		sourceSubreddit = "golang"
 		posts = demoPosts["golang"]
-		fmt.Printf("demo: unknown subreddit %q, using golang sample data\n", subreddit)
+		fmt.Printf("demo: no sample data for /r/%s, using /r/%s instead\n", subreddit, sourceSubreddit)
 	}
 
-	if limit > len(posts) {
-		limit = len(posts)
-	}
-
-	fmt.Printf("demo mode — sample posts from /r/%s (no Reddit API call)\n\n", subreddit)
+	limit = capLimit(limit, len(posts))
+	fmt.Printf("demo mode — sample posts from /r/%s (no Reddit API call)\n\n", sourceSubreddit)
 	for _, post := range posts[:limit] {
 		fmt.Printf("[%s] %s\n", post.Author, post.Title)
 	}
+
+	return nil
 }

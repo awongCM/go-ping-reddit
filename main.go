@@ -15,9 +15,22 @@ func main() {
 	demo := flag.Bool("demo", false, "run with sample data (no Reddit credentials required)")
 	flag.Parse()
 
+	if err := validateSubreddit(*subreddit); err != nil {
+		log.Fatal(err)
+	}
+	if err := validateLimit(*limit); err != nil {
+		log.Fatal(err)
+	}
+
 	if *demo {
-		runDemo(*subreddit, *limit)
+		if err := runDemo(*subreddit, *limit); err != nil {
+			log.Fatal(err)
+		}
 		return
+	}
+
+	if err := validateAgentFile(*agentFile); err != nil {
+		log.Fatal(err)
 	}
 
 	bot, err := reddit.NewBotFromAgentFile(*agentFile, 0)
@@ -36,11 +49,7 @@ func main() {
 		return
 	}
 
-	n := *limit
-	if n > len(harvest.Posts) {
-		n = len(harvest.Posts)
-	}
-
+	n := capLimit(*limit, len(harvest.Posts))
 	for _, post := range harvest.Posts[:n] {
 		fmt.Printf("[%s] %s\n", post.Author, post.Title)
 	}
