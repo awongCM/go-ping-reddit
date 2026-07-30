@@ -10,18 +10,29 @@ A minimal Reddit + Go proof of concept. Connects to Reddit with a script app, fe
 
 When creating the app, choose **script** as the type and use `http://localhost:8080` as the redirect URI (required by Reddit even for script apps).
 
-## Quick demo (no credentials)
-
-Try the agent without Reddit API access:
+## Development setup
 
 ```bash
+make setup   # download deps, build binary, create reddit-account.agent template
+make demo    # offline demo — no Reddit credentials required
+```
+
+`make setup` creates `bin/go-ping-reddit` and copies `reddit-account.agent.example` to `reddit-account.agent` if it does not exist yet.
+
+## Demo (no credentials)
+
+Run the offline demo to see sample output without calling the Reddit API:
+
+```bash
+make demo
+# or
 go run . -demo
 go run . -demo -sub programming -limit 3
 ```
 
-## Setup
+## Live mode (credentials required)
 
-1. Copy the credentials template:
+1. Copy the credentials template if you have not run `make setup`:
 
    ```bash
    cp reddit-account.agent.example reddit-account.agent
@@ -37,9 +48,11 @@ go run . -demo -sub programming -limit 3
 
    If your account uses 2FA, append the TOTP code to your password with a colon: `password:123456`.
 
-3. Run the PoC:
+3. Run against the live API:
 
    ```bash
+   make run
+   # or
    go run .
    ```
 
@@ -64,6 +77,7 @@ go run . -agent /path/to/reddit-account.agent
 ```bash
 go build -o go-ping-reddit .
 ./go-ping-reddit -sub golang
+make test
 ```
 
 ## How it works
